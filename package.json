@@ -1,19 +1,20 @@
 {
   "name": "automation-blog",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Automation Projects Blog",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"npm run watch:css\" \"hugo server -D\"",
+    "build": "hugo --minify",
+    "build:css": "tailwindcss -i ./assets/css/main.css -o ./assets/css/output.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/main.css -o ./assets/css/output.css --watch",
+    "hugo:dev": "hugo server -D",
+    "hugo:build": "hugo --minify",
+    "new:post": "hugo new posts/\-new-post.md"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
-    "autoprefixer": "^10.4.24",
-    "concurrently": "^9.2.1",
-    "postcss": "^8.5.6",
+    "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.4.38",
     "tailwindcss": "^3.4.19"
   }
 }
