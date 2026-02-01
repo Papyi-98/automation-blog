@@ -1,0 +1,5 @@
+baseURL = 'https://automation-blog.netlify.app/'
+title = 'Automation Projects Blog'
+
+[build]
+  writeStats = true
