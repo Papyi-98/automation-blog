@@ -1,0 +1,21 @@
+﻿{
+  "name": "automation-blog",
+  "version": "1.0.0",
+  "description": "Automation Projects Blog",
+  "scripts": {
+    "dev": "concurrently \"npm run watch:css\" \"hugo server -D\"",
+    "build": "hugo --minify",
+    "build:css": "tailwindcss -i ./assets/css/main.css -o ./assets/css/output.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/main.css -o ./assets/css/output.css --watch",
+    "hugo:dev": "hugo server -D",
+    "hugo:build": "hugo --minify",
+    "new:post": "hugo new posts/new-post.md"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.19"
+  }
+}
+
