@@ -9,7 +9,7 @@
     "watch:css": "tailwindcss -i ./assets/css/main.css -o ./assets/css/output.css --watch",
     "hugo:dev": "hugo server -D",
     "hugo:build": "hugo --minify",
-    "new:post": "hugo new posts/\-new-post.md"
+    "new:post": "hugo new posts/new-post.md"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
