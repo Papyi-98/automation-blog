@@ -1,117 +1,192 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
-    <link rel="stylesheet" href="/css/output.css">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                        'primary-dark': '#4338ca',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
     <style>
-        .search-container { position: relative; max-width: 400px; margin-left: auto; }
-        .search-input { 
-            color-scheme: light dark; width: 100%; padding: 0.5rem 1rem; border-radius: 0.375rem; 
-            border: 2px solid transparent; background-color: rgba(255, 255, 255, 0.1); 
-            @apply dark:bg-gray-800/50; color: white; transition: all 0.2s; 
+        * {
+            font-family: 'Inter', sans-serif;
         }
-        .search-input::placeholder { color: rgba(255, 255, 255, 0.6); }
-        .search-input:focus { 
-            outline: none; border-color: rgba(255, 255, 255, 0.3); 
-            background-color: rgba(255, 255, 255, 0.15); @apply dark:bg-gray-800/70;
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1); 
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        .search-results { 
-            position: absolute; top: 100%; left: 0; right: 0; background: white; 
-            @apply dark:bg-gray-800; border-radius: 0.375rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            max-height: 400px; overflow-y: auto; display: none; z-index: 50; 
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #4c51bf 0%, #7e22ce 100%);
         }
-        .search-result-item { 
-            padding: 0.75rem 1rem; border-bottom: 1px solid #e5e7eb; color: #1f2937; 
-            @apply dark:text-gray-200; text-decoration: none; display: block; transition: background-color 0.2s; 
+        
+        .card-hover {
+            transition: all 0.3s ease;
         }
-        .search-result-item:hover { background-color: #f3f4f6; @apply dark:bg-gray-700; }
-        .search-result-title { font-weight: 600; margin-bottom: 0.25rem; }
-        .search-result-excerpt { 
-            font-size: 0.875rem; color: #6b7280; @apply dark:text-gray-400; overflow: hidden; 
-            text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-        .no-results { padding: 1rem; color: #6b7280; @apply dark:text-gray-400; text-align: center; }
+        
+        .dark .card-hover:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tech-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 0.25rem;
+        }
+        
+        .dark .tech-tag {
+            background-color: #3730a3;
+            color: #c7d2fe;
+        }
+        
+        .checkmark {
+            color: #10b981;
+        }
+        
+        .coming-soon {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .coming-soon::after {
+            content: "Coming Soon";
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            background-color: #f59e0b;
+            color: white;
+            padding: 3px 30px;
+            font-size: 0.75rem;
+            transform: rotate(45deg);
+        }
+        
+        .dark-mode-toggle {
+            transition: all 0.3s ease;
+        }
+        
+        .dark .dark-mode-toggle {
+            color: #fbbf24;
+        }
     </style>
+    
+    <!-- Dark mode script -->
+    <script>
+        // Check for saved dark mode preference
+        if (localStorage.getItem('dark-mode') === 'true' || 
+            (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            const icon = document.querySelector('.dark-mode-toggle i');
+            
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('dark-mode', 'false');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('dark-mode', 'true');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+        
+        // Initialize icon on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const html = document.documentElement;
+            const icon = document.querySelector('.dark-mode-toggle i');
+            const isDark = html.classList.contains('dark');
+            
+            if (icon) {
+                if (isDark) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            }
+        });
+    </script>
 </head>
-<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-    <header class="bg-automation-blue dark:bg-blue-900 text-white p-6">
-        <div class="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-                <h1 class="text-3xl font-bold">{{ .Site.Title }}</h1>
-                <p class="mt-2 opacity-90">Automation Projects & Tutorials</p>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300 min-h-screen flex flex-col">
+    {{ block "header" . }}{{ end }}
+    
+    <main class="flex-grow">
+        {{ block "main" . }}{{ end }}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 dark:bg-gray-950 text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="text-2xl font-bold mb-2">{{ .Site.Title }}</div>
+                    <p class="text-gray-400">Showcasing the latest in web development projects</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://github.com/Papyi-98" target="_blank" class="text-gray-300 hover:text-white transition">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                </div>
             </div>
-            <div class="search-container">
-                <input type="search" id="search-input" class="search-input" placeholder="Search posts..." aria-label="Search">
-                <div id="search-results" class="search-results"></div>
+            <div class="text-center text-gray-400 mt-8 pt-8 border-t border-gray-700">
+                <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. All rights reserved.</p>
             </div>
-            <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors flex items-center justify-center w-10 h-10 ml-2" aria-label="Toggle dark mode" title="Toggle dark/light mode">
-                <span class="dark:hidden">🌙</span>
-                <span class="hidden dark:inline">☀️</span>
-            </button>
-        </div>
-    </header>
-
-    <main class="container mx-auto p-6" data-pagefind-body>{{ block "main" . }}{{ end }}</main>
-
-    <footer class="bg-gray-800 dark:bg-gray-900 text-white p-6 mt-8">
-        <div class="container mx-auto text-center">
-            <p>© {{ now.Format "2006" }} {{ .Site.Title }}</p>
-            <p class="mt-2 text-gray-400 text-sm">Built with Hugo & Tailwind CSS</p>
         </div>
     </footer>
-
-    <!-- Pagefind Search Script -->
+    
     <script>
-    window.addEventListener("DOMContentLoaded",async()=>{
-        const s=await import("/pagefind/pagefind.js"),n=document.getElementById("search-input"),e=document.getElementById("search-results");let t=null;
-        n.addEventListener("input",async n=>{
-            const o=n.target.value.trim();
-            if(t&&t.cancel(),o.length<2){e.style.display="none";return}
-            try{t=s.search(o);const n=await t;
-                if(e.innerHTML="",n.results.length===0){e.innerHTML='<div class="no-results">No results found</div>',e.style.display="block";return}
-                for(const o of n.results.slice(0,10)){const s=await o.data(),t=document.createElement("a");t.href=s.url,t.className="search-result-item",t.innerHTML=`<div class="search-result-title">${s.meta.title||"Untitled"}</div><div class="search-result-excerpt">${s.excerpt||""}</div>`,e.appendChild(t)}
-                e.style.display="block"
-            }catch(e){e.name!=="AbortError"&&console.error("Search error:",e)}
+        // Project card animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectCards = document.querySelectorAll('.card-hover');
+            
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'all 0.3s ease';
+                });
+            });
         });
-        document.addEventListener("click",t=>{!n.contains(t.target)&&!e.contains(t.target)&&(e.style.display="none")});
-        document.addEventListener("keydown",t=>{t.key==="Escape"&&(e.style.display="none",n.blur())});
-    });
-    </script>
-
-    <!-- Dark Mode Toggle Script - SIMPLE AND WORKING -->
-    <script>
-    console.log("DARK MODE: Script loading");
-    const themeButton=document.getElementById("theme-toggle"),htmlElement=document.documentElement;
-    if(themeButton){
-        console.log("DARK MODE: Button found");
-        // Set initial theme
-        const savedTheme=localStorage.getItem("theme");
-        if(savedTheme==="dark"){htmlElement.classList.add("dark");console.log("DARK MODE: Initial - dark (saved)")}
-        else if(savedTheme==="light"){htmlElement.classList.remove("dark");console.log("DARK MODE: Initial - light (saved)")}
-        else{
-            const prefersDark=window.matchMedia("(prefers-color-scheme: dark)").matches;
-            if(prefersDark){htmlElement.classList.add("dark");console.log("DARK MODE: Initial - dark (system)")}
-            else{htmlElement.classList.remove("dark");console.log("DARK MODE: Initial - light (system)")}
-        }
-        // Add click handler
-        themeButton.onclick=function(){
-            console.log("DARK MODE: Button clicked!");
-            if(htmlElement.classList.contains("dark")){
-                htmlElement.classList.remove("dark");
-                localStorage.setItem("theme","light");
-                console.log("DARK MODE: Switched to light")
-            }else{
-                htmlElement.classList.add("dark");
-                localStorage.setItem("theme","dark");
-                console.log("DARK MODE: Switched to dark")
-            }
-        };
-        console.log("DARK MODE: Setup complete")
-    }else{console.error("DARK MODE: ERROR - No theme-toggle button found")}
     </script>
 </body>
 </html>
-

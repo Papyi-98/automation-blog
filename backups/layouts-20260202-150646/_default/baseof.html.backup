@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <header class="bg-automation-blue text-white p-6">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-bold">{{ .Site.Title }}</h1>
+            <p class="mt-2 opacity-90">Automation Projects & Tutorials</p>
+        </div>
+    </header>
+    
+    <main class="container mx-auto p-6">
+        {{ block "main" . }}{{ end }}
+    </main>
+    
+    <footer class="bg-gray-800 text-white p-6 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© {{ now.Format "2006" }} {{ .Site.Title }}</p>
+            <p class="mt-2 text-gray-400 text-sm">Built with Hugo & Tailwind CSS</p>
+        </div>
+    </footer>
+</body>
+</html>
