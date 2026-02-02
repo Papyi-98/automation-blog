@@ -1,28 +1,243 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
-    <link rel="stylesheet" href="/css/output.css">
-</head>
-<body class="bg-gray-50 text-gray-900">
-    <header class="bg-automation-blue text-white p-6">
-        <div class="container mx-auto">
-            <h1 class="text-3xl font-bold">{{ .Site.Title }}</h1>
-            <p class="mt-2 opacity-90">Automation Projects & Tutorials</p>
-        </div>
-    </header>
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
     
-    <main class="container mx-auto p-6">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                        'primary-dark': '#4338ca',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #4c51bf 0%, #7e22ce 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .card-hover:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tech-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 0.25rem;
+        }
+        
+        .dark .tech-tag {
+            background-color: #3730a3;
+            color: #c7d2fe;
+        }
+        
+        .checkmark {
+            color: #10b981;
+        }
+        
+        .coming-soon {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .coming-soon::after {
+            content: "Coming Soon";
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            background-color: #f59e0b;
+            color: white;
+            padding: 3px 30px;
+            font-size: 0.75rem;
+            transform: rotate(45deg);
+        }
+        
+        .dark-mode-toggle {
+            transition: all 0.3s ease;
+        }
+        
+        .dark .dark-mode-toggle {
+            color: #fbbf24;
+        }
+        /* Projects page specific styles */
+    .project-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark .project-card:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .tech-badge {
+        display: inline-block;
+        padding: 0.35rem 0.75rem;
+        background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        color: #4f46e5;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin: 0.25rem;
+    }
+    
+    .dark .tech-badge {
+        background: linear-gradient(135deg, #3730a3 0%, #312e81 100%);
+        color: #c7d2fe;
+    }
+    
+    .status-badge {
+        padding: 0.35rem 0.85rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+    }
+    
+    .project-metric {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .dark .project-metric {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    }
+
+    
+    <!-- Dark mode script -->
+    <script>
+        // Check for saved dark mode preference
+        if (localStorage.getItem('dark-mode') === 'true' || 
+            (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            const icon = document.querySelector('.dark-mode-toggle i');
+            
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('dark-mode', 'false');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('dark-mode', 'true');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+        
+        // Initialize icon on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const html = document.documentElement;
+            const icon = document.querySelector('.dark-mode-toggle i');
+            const isDark = html.classList.contains('dark');
+            
+            if (icon) {
+                if (isDark) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            }
+        });
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300 min-h-screen flex flex-col">
+    {{ block "header" . }}{{ end }}
+    
+    <main class="flex-grow">
         {{ block "main" . }}{{ end }}
     </main>
     
-    <footer class="bg-gray-800 text-white p-6 mt-8">
-        <div class="container mx-auto text-center">
-            <p>© {{ now.Format "2006" }} {{ .Site.Title }}</p>
-            <p class="mt-2 text-gray-400 text-sm">Built with Hugo & Tailwind CSS</p>
+    <!-- Footer -->
+    <footer class="bg-gray-800 dark:bg-gray-950 text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="text-2xl font-bold mb-2">{{ .Site.Title }}</div>
+                    <p class="text-gray-400">Showcasing the latest in web development projects</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://github.com/Papyi-98" target="_blank" class="text-gray-300 hover:text-white transition">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center text-gray-400 mt-8 pt-8 border-t border-gray-700">
+                <p>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+    
+    <script>
+        // Project card animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectCards = document.querySelectorAll('.card-hover');
+            
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'all 0.3s ease';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
+
+

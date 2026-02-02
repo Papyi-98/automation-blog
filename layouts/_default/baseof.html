@@ -30,7 +30,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Custom CSS -->
+    <!-- Simple, clean CSS -->
     <style>
         * {
             font-family: 'Inter', sans-serif;
@@ -105,7 +105,6 @@
     
     <!-- Dark mode script -->
     <script>
-        // Check for saved dark mode preference
         if (localStorage.getItem('dark-mode') === 'true' || 
             (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -131,7 +130,6 @@
             }
         }
         
-        // Initialize icon on page load
         document.addEventListener('DOMContentLoaded', function() {
             const html = document.documentElement;
             const icon = document.querySelector('.dark-mode-toggle i');
@@ -177,7 +175,6 @@
     </footer>
     
     <script>
-        // Project card animations
         document.addEventListener('DOMContentLoaded', function() {
             const projectCards = document.querySelectorAll('.card-hover');
             
@@ -190,4 +187,3 @@
     </script>
 </body>
 </html>
-
