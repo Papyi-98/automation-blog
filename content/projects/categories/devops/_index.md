@@ -1,12 +1,6 @@
 ﻿---
-title: " devops.Value.ToUpper() evops Projects"
+title: "CI/CD & DevOps Projects"
 date: 2024-01-15
-description: " devops.Value.ToUpper() evops project implementations"
+description: "All CI/CD & DevOps project implementations and case studies"
 ---
-#  devops.Value.ToUpper() evops Projects
-
-Project implementations and detailed case studies are being prepared for this category.
-
-**Status:** Content development in progress
-
-[Back to All Projects](/projects/)
+Browse all projects in the CI/CD & DevOps category. Each project includes technical details, implementation notes, and live examples where available.
