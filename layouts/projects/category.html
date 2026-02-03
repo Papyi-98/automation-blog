@@ -1,0 +1,134 @@
+{{ define "main" }}
+{{/* Get all projects data */}}
+{{ $allProjects := $.Site.Data.projects }}
+{{/* Get current category from URL slug, not title */}}
+{{ $currentCategory := .File.ContentBaseName }}
+
+<div class="container mx-auto px-4 py-16">
+    <!-- Category Header -->
+    <div class="text-center mb-12 max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+            {{ .Title }}
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            {{ .Description }}
+        </p>
+
+        <!-- Update Projects Button -->
+        <button id="updateProjectsBtn" class="bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-lg transition-colors mb-8 inline-flex items-center">
+            <i class="fas fa-sync-alt mr-2"></i> Update Projects
+        </button>
+
+        <div class="text-gray-500 dark:text-gray-400 text-sm">
+            Showing {{ len (where $allProjects "category" $currentCategory) }} projects in this category
+        </div>
+    </div>
+
+    <!-- Projects List -->
+    <div class="max-w-6xl mx-auto">
+        {{ $categoryProjects := where $allProjects "category" $currentCategory }}
+        {{ if $categoryProjects }}
+            <div class="grid md:grid-cols-2 gap-8">
+                {{ range $categoryProjects }}
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow">
+                    <!-- Project Header -->
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                {{ .icon }} {{ .title }}
+                            </h3>
+                            <div class="flex items-center gap-3">
+                                <span class="px-3 py-1 rounded-full text-sm font-medium
+                                    {{ if eq .status "completed" }}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
+                                    {{ else if eq .status "in-progress" }}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
+                                    {{ else }}bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200{{ end }}">
+                                    {{ .status | title }}
+                                </span>
+                                <span class="text-gray-500 dark:text-gray-400 text-sm">
+                                    <i class="fas fa-clock mr-1"></i>{{ .readTime }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Description -->
+                    <p class="text-gray-700 dark:text-gray-300 mb-6">
+                        {{ .description }}
+                    </p>
+
+                    <!-- Technologies -->
+                    <div class="mb-6">
+                        <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Technologies</h4>
+                        <div class="flex flex-wrap gap-2">
+                            {{ range .tech }}
+                            <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">
+                                {{ . }}
+                            </span>
+                            {{ end }}
+                        </div>
+                    </div>
+
+                    <!-- Links -->
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        {{ if .github }}
+                        <a href="{{ .github }}" target="_blank" class="text-primary hover:text-primary-dark font-medium inline-flex items-center">
+                            <i class="fab fa-github mr-2"></i> GitHub
+                        </a>
+                        {{ end }}
+                        {{ if .live }}
+                        <a href="{{ .live }}" target="_blank" class="text-primary hover:text-primary-dark font-medium inline-flex items-center">
+                            <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                        </a>
+                        {{ end }}
+                    </div>
+
+                    <!-- Comment Section Placeholder -->
+                    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Discussion</h4>
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 text-center">
+                            <p class="text-gray-500 dark:text-gray-400 mb-2">
+                                <i class="fas fa-comments text-2xl mb-2"></i>
+                            </p>
+                            <p class="text-gray-600 dark:text-gray-300">
+                                Comments and discussions coming soon
+                            </p>
+                            <button class="mt-3 text-primary hover:text-primary-dark font-medium text-sm">
+                                <i class="fas fa-plus mr-1"></i> Add Comment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        {{ else }}
+            <div class="text-center py-12">
+                <i class="fas fa-folder-open text-4xl text-gray-300 dark:text-gray-700 mb-4"></i>
+                <p class="text-xl text-gray-600 dark:text-gray-400">No projects found in this category.</p>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">Debug: Looking for category "{{ $currentCategory }}"</p>
+            </div>
+        {{ end }}
+
+        <!-- Back to Projects -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
+            <a href="/projects/" class="text-primary hover:text-primary-dark font-medium inline-flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i> Back to All Categories
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Update Projects Script -->
+<script>
+document.getElementById('updateProjectsBtn').addEventListener('click', function() {
+    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Updating...';
+    this.disabled = true;
+
+    // This will be implemented later
+    setTimeout(() => {
+        alert('Project update functionality coming soon!');
+        this.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> Update Projects';
+        this.disabled = false;
+    }, 1500);
+});
+</script>
+{{ end }}
