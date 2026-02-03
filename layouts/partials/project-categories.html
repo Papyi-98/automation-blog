@@ -1,0 +1,43 @@
+﻿{{/* Get projects data */}}
+{{ $projects := $.Site.Data.projects }}
+
+{{/* Group projects by category and count them */}}
+{{ $categories := dict }}
+{{ range $projects }}
+  {{ $category := .category }}
+  {{ $count := index $categories $category | default 0 }}
+  {{ $categories = merge $categories (dict $category (add $count 1)) }}
+{{ end }}
+
+{{/* Define category metadata */}}
+{{ $categoryInfo := dict 
+  "web-development" (dict "name" "Web Development" "iconClass" "fas fa-code" "description" "Build automation, deployment pipelines, and web applications.")
+  "devops" (dict "name" "CI/CD & DevOps" "iconClass" "fas fa-server" "description" "Automated testing, deployment, and infrastructure management.")
+  "workflow-automation" (dict "name" "Workflow Automation" "iconClass" "fas fa-cogs" "description" "Business process automation and task optimization.")
+  "data-processing" (dict "name" "Data Processing" "iconClass" "fas fa-database" "description" "Web scraping, data collection, and analysis pipelines.")
+}}
+
+<div class="grid md:grid-cols-2 gap-8">
+  {{ range $categoryId, $info := $categoryInfo }}
+    {{ $count := index $categories $categoryId | default 0 }}
+    <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-200 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 hover:border-primary/30">
+      <div class="absolute top-6 right-6 text-3xl text-gray-300 dark:text-gray-700 group-hover:text-primary/20 transition-colors">
+        <i class="{{ $info.iconClass }}"></i>
+      </div>
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $info.name }}</h3>
+        {{ if gt $count 0 }}
+          <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+            {{ $count }} project{{ if gt $count 1 }}s{{ end }}
+          </span>
+        {{ end }}
+      </div>
+      <p class="text-gray-600 dark:text-gray-300 mb-8">
+        {{ $info.description }}
+      </p>
+      <a href="/projects/categories/{{ $categoryId }}/" class="inline-flex items-center text-primary hover:text-primary-dark font-medium text-lg">
+        View Projects <i class="fas fa-arrow-right ml-3 group-hover:ml-4 transition-all"></i>
+      </a>
+    </div>
+  {{ end }}
+</div>
