@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Add Project Button</title>
+    <style>
+        .hidden { display: none; }
+        #updateProjectsModal { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .modal-content { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            width: 500px; 
+            max-width: 90%; 
+        }
+        input, textarea, select {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test: Add New Project Button</h1>
+    
+    <button id="updateProjectsBtn">Add New Project</button>
+    
+    <div id="updateProjectsModal" class="hidden">
+        <div class="modal-content">
+            <h2>Add New Project</h2>
+            <form id="projectForm">
+                <input type="text" id="projectTitle" placeholder="Project Title" required>
+                <textarea id="projectDescription" placeholder="Description" required></textarea>
+                <select id="projectStatus" required>
+                    <option value="planned">Planned</option>
+                    <option value="in-progress" selected>In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+                <input type="text" id="projectTech" placeholder="Technologies (comma-separated)" required>
+                <div>
+                    <button type="button" id="cancelBtn">Cancel</button>
+                    <button type="submit">Add Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const modal = document.getElementById('updateProjectsModal');
+        const openBtn = document.getElementById('updateProjectsBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const form = document.getElementById('projectForm');
+        
+        openBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+        });
+        
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Form submitted successfully!');
+            modal.classList.add('hidden');
+            form.reset();
+        });
+        
+        console.log('Test page loaded. Click "Add New Project" to test.');
+    </script>
+</body>
+</html>

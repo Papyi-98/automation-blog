@@ -85,9 +85,14 @@
 
             <!-- Modal Form -->
             <div class="p-6">
-                <form id="projectForm" class="space-y-6">
-                    <!-- Hidden category field -->
+                <form id="projectForm" class="space-y-6" name="add-project" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                                        <!-- Hidden category field -->
                     <input type="hidden" id="projectCategory" name="category" value="{{ $currentCategory }}">
+                    <!-- Netlify Forms hidden field -->
+                    <input type="hidden" name="form-name" value="add-project">
+                    <p class="hidden">
+                        <label>Don\'t fill this out if you\'re human: <input name="bot-field" /></label>
+                    </p>
 
                     <!-- Project Title -->
                     <div>
@@ -242,4 +247,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 {{ end }}
+
 

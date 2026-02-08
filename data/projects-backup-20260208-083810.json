@@ -1,0 +1,123 @@
+[
+    {
+        "id":  "blog-deployment",
+        "title":  "Blog Deployment Automation",
+        "description":  "Full CI/CD pipeline for static site deployment using Hugo, Tailwind CSS, and Netlify",
+        "category":  "web-development",
+        "status":  "completed",
+        "tech":  [
+                     "Hugo",
+                     "Tailwind CSS",
+                     "GitHub",
+                     "Netlify",
+                     "Pagefind"
+                 ],
+        "github":  "https://github.com/Papyi-98/automation-blog",
+        "live":  "https://automation-blog.netlify.app",
+        "date":  "2024-01-15",
+        "featured":  true,
+        "icon":  "🚀",
+        "readTime":  "5 min"
+    },
+    {
+        "id":  "ci-cd-pipeline",
+        "title":  "CI/CD Pipeline Setup",
+        "description":  "Automated testing and deployment system with GitHub Actions and Docker",
+        "category":  "devops",
+        "status":  "completed",
+        "tech":  [
+                     "GitHub Actions",
+                     "Docker",
+                     "AWS",
+                     "Node.js",
+                     "Jest"
+                 ],
+        "github":  "https://github.com/Papyi-98/ci-cd-pipeline",
+        "live":  "https://ci-cd-demo.netlify.app",
+        "date":  "2024-01-10",
+        "featured":  true,
+        "icon":  "⚙️",
+        "readTime":  "8 min"
+    },
+    {
+        "id":  "web-scraping",
+        "title":  "Web Scraping Automation",
+        "description":  "Intelligent data collection and processing with Python and FastAPI",
+        "category":  "data-processing",
+        "status":  "planned",
+        "tech":  [
+                     "Python",
+                     "FastAPI",
+                     "MongoDB",
+                     "Docker",
+                     "BeautifulSoup"
+                 ],
+        "github":  "https://github.com/Papyi-98/web-scraping-automation",
+        "live":  "",
+        "date":  "2024-02-01",
+        "featured":  true,
+        "icon":  "🕷️",
+        "readTime":  "10 min"
+    },
+    {
+        "id":  "document-processor",
+        "title":  "Document Processing Pipeline",
+        "description":  "Automated PDF extraction and data entry system",
+        "category":  "workflow-automation",
+        "status":  "in-progress",
+        "tech":  [
+                     "Python",
+                     "OpenCV",
+                     "PostgreSQL",
+                     "FastAPI",
+                     "Tesseract"
+                 ],
+        "github":  "https://github.com/Papyi-98/document-processor",
+        "live":  "",
+        "date":  "2024-01-20",
+        "featured":  false,
+        "icon":  "📄",
+        "readTime":  "12 min"
+    },
+    {
+        "id":  "email-automation",
+        "title":  "Email Automation System",
+        "description":  "Automated email parsing and response system",
+        "category":  "workflow-automation",
+        "status":  "completed",
+        "tech":  [
+                     "Python",
+                     "IMAP",
+                     "SMTP",
+                     "Regex",
+                     "SQLite"
+                 ],
+        "github":  "https://github.com/Papyi-98/email-automation",
+        "live":  "",
+        "date":  "2023-12-05",
+        "featured":  false,
+        "icon":  "📧",
+        "readTime":  "7 min"
+    },
+    {
+        "id":  "api-documentation-generator",
+        "title":  "API Documentation Generator",
+        "description":  "Automatically generates API documentation from code comments",
+        "category":  "web-development",
+        "status":  "in-progress",
+        "tech":  [
+                     "Python",
+                     "FastAPI",
+                     "Markdown",
+                     "Docker"
+                 ],
+        "github":  "https://github.com/example/api-doc-generator",
+        "live":  "",
+        "date":  "2026-02-08",
+        "featured":  {
+                         "IsPresent":  true
+                     },
+        "icon":  "??",
+        "readTime":  "5 min"
+    }
+]
