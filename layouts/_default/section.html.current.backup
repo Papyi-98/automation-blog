@@ -1,0 +1,238 @@
+﻿{{ define "main" }}
+{{/* Get all projects data */}}
+{{ $allProjects := $.Site.Data.projects }}
+{{/* Get current category from URL slug */}}
+{{ $currentCategory := .File.ContentBaseName }}
+
+<div class="container mx-auto px-4 py-16">
+    <!-- Category Header -->
+    <div class="text-center mb-12 max-w-3xl mx-auto">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary text-2xl mb-6">
+            <i class="fas fa-folder"></i>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+            {{ .Title }}
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
+            {{ .Description }}
+        </p>
+        
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div class="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                <i class="fas fa-project-diagram"></i>
+                <span>{{ len (where $allProjects "category" $currentCategory) }} projects</span>
+            </div>
+            
+            <!-- Update Projects Button -->
+            <button id="updateProjectsBtn" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-lg font-medium transition-colors">
+                <i class="fas fa-plus"></i>
+                <span>Add New Project</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Update Projects Modal (Hidden by default) -->
+    <div id="updateProjectsModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-white dark:bg-gray-800 p-6 border-b border-gray-200 dark:border-gray-700 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        <i class="fas fa-plus-circle mr-2"></i>Add New Project
+                    </h3>
+                    <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mt-2">
+                    Add a new project to the <span class="font-semibold">{{ .Title }}</span> category
+                </p>
+            </div>
+
+            <!-- Modal Form -->
+            <div class="p-6">
+                <form id="projectForm" class="space-y-6">
+    <!-- Hidden category field -->
+    <input type="hidden" id="projectCategory" name="category" value="{{ $currentCategory }}">
+
+    <!-- Project Title -->
+    <div>
+        <label for="projectTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Project Title *
+        </label>
+        <input type="text" id="projectTitle" name="title" required 
+               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+               placeholder="Enter project title">
+    </div>
+
+    <!-- Description -->
+    <div>
+        <label for="projectDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Description *
+        </label>
+        <textarea id="projectDescription" name="description" rows="3" required
+                  class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+                  placeholder="Brief project description"></textarea>
+    </div>
+
+    <!-- Status -->
+    <div>
+        <label for="projectStatus" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Status *
+        </label>
+        <select id="projectStatus" name="status" required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+            <option value="planned">Planned</option>
+            <option value="in-progress" selected>In Progress</option>
+            <option value="completed">Completed</option>
+        </select>
+    </div>
+
+    <!-- Technologies -->
+    <div>
+        <label for="projectTech" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Technologies (comma-separated) *
+        </label>
+        <input type="text" id="projectTech" name="tech" required
+               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+               placeholder="Python, JavaScript, Docker, etc.">
+    </div>
+
+    <!-- GitHub URL -->
+    <div>
+        <label for="projectGitHub" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            GitHub URL (optional)
+        </label>
+        <input type="url" id="projectGitHub" name="github"
+               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+               placeholder="https://github.com/username/repo">
+    </div>
+
+    <!-- Live Demo URL -->
+    <div>
+        <label for="projectLive" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Live Demo URL (optional)
+        </label>
+        <input type="url" id="projectLive" name="live"
+               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+               placeholder="https://demo.example.com">
+    </div>
+
+    <!-- Featured -->
+    <div class="flex items-center">
+        <input type="checkbox" id="projectFeatured" name="featured"
+               class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary">
+        <label for="projectFeatured" class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+            Mark as featured project
+        </label>
+    </div>
+
+    <!-- Icon -->
+    <div>
+        <label for="projectIcon" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Icon Emoji (optional)
+        </label>
+        <input type="text" id="projectIcon" name="icon"
+               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+               placeholder="🚀 (rocket emoji)">
+    </div>
+
+    <!-- Read Time -->
+    <div>
+        <label for="projectReadTime" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Read Time (optional)
+        </label>
+        <input type="text" id="projectReadTime" name="readTime"
+               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+               placeholder="5 min" value="5 min">
+    </div>
+
+    <!-- Form Buttons -->
+    <div class="flex justify-end gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <button type="button" id="cancelBtn" class="px-6 py-3 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            Cancel
+        </button>
+        <button type="submit" class="px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-colors">
+            Add Project
+        </button>
+    </div>
+</form>                </div>
+            </div>
+        </div>
+    </div></div>\s*</div>\s*</div>\s*</div>\s*<script>
+<script>
+    // Form submission handler
+    document.getElementById('projectForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Adding Project...';
+        submitBtn.disabled = true;
+        
+        // Collect form data
+        const formData = {
+            category: document.getElementById('projectCategory').value,
+            title: document.getElementById('projectTitle').value,
+            description: document.getElementById('projectDescription').value,
+            status: document.getElementById('projectStatus').value,
+            tech: document.getElementById('projectTech').value,
+            github: document.getElementById('projectGitHub').value,
+            live: document.getElementById('projectLive').value,
+            featured: document.getElementById('projectFeatured').checked,
+            icon: document.getElementById('projectIcon').value || '🚀',
+            readTime: document.getElementById('projectReadTime').value || '5 min'
+        };
+        
+        try {
+            // In a real implementation, this would make an API call
+            // For now, we'll show a success message
+            console.log('Form data:', formData);
+            
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Show success message
+            alert('Project added successfully! Note: In production, this would call your PowerShell script to update projects.json');
+            
+            // Close modal
+            modal.classList.add('hidden');
+            
+            // Reset form
+            this.reset();
+            document.getElementById('projectReadTime').value = '5 min';
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error adding project: ' + error.message);
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Simple form validation before enabling submit
+    const requiredFields = ['projectTitle', 'projectDescription', 'projectStatus', 'projectTech'];
+    requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.addEventListener('input', validateForm);
+        }
+    });
+    
+    function validateForm() {
+        const submitBtn = document.querySelector('#projectForm button[type="submit"]');
+        let isValid = true;
+        
+        requiredFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field && !field.value.trim()) {
+                isValid = false;
+            }
+        });
+        
+        submitBtn.disabled = !isValid;
+    }
+    
+    // Initial validation
+    validateForm();</script>

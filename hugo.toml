@@ -1,5 +1,0 @@
-baseURL = 'https://utomation.netlify.app/'
-title = 'Automation Projects Blog'
-
-[build]
-  writeStats = true
