@@ -1,4 +1,4 @@
-{{ define "main" }}
+﻿{{ define "main" }}
 {{/* Get all projects data */}}
 {{ $allProjects := $.Site.Data.projects }}
 {{/* Get current category from URL slug */}}
@@ -16,191 +16,230 @@
         <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
             {{ .Description }}
         </p>
-        
-        <div class="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400">
-            <i class="fas fa-project-diagram"></i>
-            <span>{{ len (where $allProjects "category" $currentCategory) }} projects</span>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div class="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                <i class="fas fa-project-diagram"></i>
+                <span>{{ len (where $allProjects "category" $currentCategory) }} projects</span>
+            </div>
+
+            <!-- Update Projects Button -->
+            <button id="updateProjectsBtn" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-lg font-medium transition-colors">
+                <i class="fas fa-plus"></i>
+                <span>Add New Project</span>
+            </button>
         </div>
     </div>
 
-    <!-- Projects List -->
-    <div class="max-w-6xl mx-auto">
-        {{ $categoryProjects := where $allProjects "category" $currentCategory }}
-        {{ if $categoryProjects }}
-            <div class="space-y-8">
-                {{ range $index, $project := $categoryProjects }}
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <!-- Project Header -->
-                    <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                        <div class="flex items-start justify-between">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <span class="text-2xl">{{ .icon }}</span>
-                                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
-                                        {{ .title }}
-                                    </h3>
-                                </div>
-                                
-                                <div class="flex items-center gap-3 flex-wrap">
-                                    <span class="px-3 py-1 rounded-full text-sm font-medium
-                                        {{ if eq .status "completed" }}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
-                                        {{ else if eq .status "in-progress" }}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
-                                        {{ else }}bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200{{ end }}">
-                                        {{ .status | title }}
-                                    </span>
-                                    <span class="text-gray-500 dark:text-gray-400 text-sm">
-                                        <i class="fas fa-calendar mr-1"></i>{{ .date | time.Format "Jan 2, 2006" }}
-                                    </span>
-                                    <span class="text-gray-500 dark:text-gray-400 text-sm">
-                                        <i class="fas fa-clock mr-1"></i>{{ .readTime }}
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            {{ if .featured }}
-                            <span class="ml-4 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                                <i class="fas fa-star mr-1"></i> Featured
-                            </span>
-                            {{ end }}
-                        </div>
-                    </div>
-
-                    <!-- Project Description -->
-                    <div class="p-6">
-                        <p class="text-gray-700 dark:text-gray-300 text-lg mb-6">
-                            {{ .description }}
-                        </p>
-
-                        <!-- Technologies -->
-                        <div class="mb-6">
-                            <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3">Technologies Used</h4>
-                            <div class="flex flex-wrap gap-2">
-                                {{ range .tech }}
-                                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg text-sm font-medium">
-                                    {{ . }}
-                                </span>
-                                {{ end }}
-                            </div>
-                        </div>
-
-                        <!-- Links -->
-                        <div class="flex flex-wrap gap-4">
-                            {{ if .github }}
-                            <a href="{{ .github }}" target="_blank" class="inline-flex items-center gap-2 bg-gray-900 dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-white px-5 py-2.5 rounded-lg font-medium transition-colors">
-                                <i class="fab fa-github"></i>
-                                <span>View Code</span>
-                            </a>
-                            {{ end }}
-                            {{ if .live }}
-                            <a href="{{ .live }}" target="_blank" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-lg font-medium transition-colors">
-                                <i class="fas fa-external-link-alt"></i>
-                                <span>Live Demo</span>
-                            </a>
-                            {{ end }}
-                            <button class="show-comments-btn inline-flex items-center gap-2 text-primary hover:text-primary-dark font-medium px-4 py-2.5" data-project-id="{{ .id }}">
-                                <i class="fas fa-comment"></i>
-                                <span>Comments (0)</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Comment Section (Hidden by default) -->
-                    <div id="comments-{{ .id }}" class="comments-section hidden p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
-                        <div class="flex items-center justify-between mb-4">
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                <i class="fas fa-comments mr-2"></i>Discussion
-                            </h4>
-                            <button class="close-comments-btn text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300" data-project-id="{{ .id }}">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- Comment Form -->
-                        <div class="mb-6">
-                            <textarea class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white resize-none focus:ring-2 focus:ring-primary focus:border-transparent" rows="3" placeholder="Add your comment or question about this project..."></textarea>
-                            <div class="flex justify-end mt-3">
-                                <button class="px-5 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-colors">
-                                    Post Comment
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Comments List -->
-                        <div class="space-y-4">
-                            <div class="text-center py-8 text-gray-500 dark:text-gray-400">
-                                <i class="fas fa-comment-slash text-3xl mb-3"></i>
-                                <p>No comments yet. Be the first to share your thoughts!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Projects Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {{ range where $allProjects "category" $currentCategory }}
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-shadow">
+            <div class="flex items-center justify-between mb-4">
+                <div class="text-3xl">{{ .icon }}</div>
+                <span class="px-3 py-1 rounded-full text-sm font-medium 
+                    {{ if eq .status "completed" }}bg-green-100 text-green-800{{ end }}
+                    {{ if eq .status "in-progress" }}bg-yellow-100 text-yellow-800{{ end }}
+                    {{ if eq .status "planned" }}bg-blue-100 text-blue-800{{ end }}">
+                    {{ .status }}
+                </span>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">{{ .title }}</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">{{ .description }}</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+                {{ range .tech }}
+                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-sm text-gray-700 dark:text-gray-300">
+                    {{ . }}
+                </span>
                 {{ end }}
             </div>
-        {{ else }}
-            <div class="text-center py-16">
-                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 text-3xl mb-6">
-                    <i class="fas fa-folder-open"></i>
-                </div>
-                <h3 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-3">No projects found</h3>
-                <p class="text-gray-500 dark:text-gray-400">No projects are currently listed in this category.</p>
+            <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                <span class="text-sm text-gray-500 dark:text-gray-400">{{ .readTime }}</span>
+                {{ if .github }}
+                <a href="{{ .github }}" target="_blank" class="text-primary hover:text-primary-dark font-medium">
+                    GitHub →
+                </a>
+                {{ end }}
             </div>
+        </div>
         {{ end }}
+    </div>
 
-        <!-- Back to Projects -->
-        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
-            <a href="/projects/" class="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-medium text-lg">
-                <i class="fas fa-arrow-left"></i>
-                <span>Back to All Categories</span>
-            </a>
+    <!-- Add Project Modal -->
+    <div id="updateProjectsModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl">
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-white dark:bg-gray-800 p-6 border-b border-gray-200 dark:border-gray-700 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+                        <i class="fas fa-plus-circle mr-2"></i>Add New Project
+                    </h3>
+                    <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mt-2">
+                    Add a new project to the <span class="font-semibold">{{ .Title }}</span> category
+                </p>
+            </div>
+
+            <!-- Modal Form -->
+            <div class="p-6">
+                <form id="projectForm" class="space-y-6">
+                    <!-- Hidden category field -->
+                    <input type="hidden" id="projectCategory" name="category" value="{{ $currentCategory }}">
+
+                    <!-- Project Title -->
+                    <div>
+                        <label for="projectTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Project Title *
+                        </label>
+                        <input type="text" id="projectTitle" name="title" required 
+                               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+                               placeholder="Enter project title">
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label for="projectDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Description *
+                        </label>
+                        <textarea id="projectDescription" name="description" rows="3" required
+                                  class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+                                  placeholder="Brief project description"></textarea>
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label for="projectStatus" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Status *
+                        </label>
+                        <select id="projectStatus" name="status" required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="planned">Planned</option>
+                            <option value="in-progress" selected>In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div>
+                        <label for="projectTech" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Technologies (comma-separated) *
+                        </label>
+                        <input type="text" id="projectTech" name="tech" required
+                               class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+                               placeholder="Python, JavaScript, Docker, etc.">
+                    </div>
+
+                    <!-- Form Buttons -->
+                    <div class="flex justify-end gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <button type="button" id="cancelBtn" class="px-6 py-3 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-colors">
+                            Add Project
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Comment System JavaScript -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Show comments for a project
-    document.querySelectorAll('.show-comments-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const projectId = this.getAttribute('data-project-id');
-            const commentsSection = document.getElementById(`comments-${projectId}`);
-            commentsSection.classList.remove('hidden');
-            this.classList.add('hidden');
-        });
+    const modal = document.getElementById('updateProjectsModal');
+    const openBtn = document.getElementById('updateProjectsBtn');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    // Open modal
+    openBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
     });
 
-    // Hide comments
-    document.querySelectorAll('.close-comments-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const projectId = this.getAttribute('data-project-id');
-            const commentsSection = document.getElementById(`comments-${projectId}`);
-            const showButton = document.querySelector(`.show-comments-btn[data-project-id="${projectId}"]`);
+    // Close modal
+    closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+
+    // Form submission
+    document.getElementById('projectForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Adding Project...';
+        submitBtn.disabled = true;
+        
+        // Collect form data
+        const formData = {
+            category: document.getElementById('projectCategory').value,
+            title: document.getElementById('projectTitle').value,
+            description: document.getElementById('projectDescription').value,
+            status: document.getElementById('projectStatus').value,
+            tech: document.getElementById('projectTech').value
+        };
+        
+        try {
+            console.log('Form data:', formData);
+            alert('Project added successfully!\n\nIn production, this would call your PowerShell script to update projects.json.\n\nForm data:\n' + JSON.stringify(formData, null, 2));
             
-            commentsSection.classList.add('hidden');
-            if (showButton) {
-                showButton.classList.remove('hidden');
+            // Close modal
+            modal.classList.add('hidden');
+            
+            // Reset form
+            this.reset();
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+    
+    // Form validation
+    const requiredFields = ['projectTitle', 'projectDescription', 'projectStatus', 'projectTech'];
+    
+    function validateForm() {
+        const submitBtn = document.querySelector('#projectForm button[type="submit"]');
+        let isValid = true;
+        
+        requiredFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field && !field.value.trim()) {
+                isValid = false;
             }
         });
+        
+        submitBtn.disabled = !isValid;
+    }
+    
+    // Add validation listeners
+    requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.addEventListener('input', validateForm);
+        }
     });
-
-    // Handle comment submission
-    document.querySelectorAll('.comments-section textarea').forEach(textarea => {
-        textarea.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'Enter') {
-                this.closest('.comments-section').querySelector('button').click();
-            }
-        });
-    });
+    
+    // Initial validation
+    validateForm();
 });
 </script>
-
-<!-- Style for comment sections -->
-<style>
-.comments-section {
-    transition: all 0.3s ease;
-}
-.hidden {
-    display: none !important;
-}
-</style>
 {{ end }}
+
