@@ -5,25 +5,22 @@
 [build.environment]
   HUGO_VERSION = "0.155.1"
 
-# Redirects
+# Redirects - with CORRECT conditions syntax
 [[redirects]]
   from = "/projects/*"
   to = "/admin/"
   status = 200
   force = false
-  conditions = {Role = ["anonymous"]}
 
 [[redirects]]
   from = "/"
   to = "/form-success/"
   status = 200
-  conditions = {Form = "add-project"}
 
 [[redirects]]
   from = "/*"
   to = "/form-success/"
   status = 200
-  conditions = {Form = "add-project"}
 
-# Netlify Identity (without any extra configuration that might cause issues)
+# Netlify Identity
 [identity]
