@@ -4,51 +4,26 @@
 
 [build.environment]
   HUGO_VERSION = "0.155.1"
-  HUGO_ENV = "production"
 
-# Enable Netlify Forms
-[forms]
-  [forms.honeypot]
-    enable = true
-
-# Enable Netlify Functions
-[functions]
-  directory = "netlify/functions"
-
-# For larger sites, you might need this
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-
-# Form submission redirects
-[[redirects]]
-  from = "/"
-  to = "/form-success/"
-  status = 200
-  conditions = {Form = "add-project"}
-
-# Redirect form submissions to success page
-[[redirects]]
-  from = "/*"
-  to = "/form-success/"
-  status = 200
-  conditions = {Form = "add-project"}
-
-# Netlify Identity Configuration
-[identity]
-  [identity.resources]
-    github = true
-    google = true
-    email = true
-
-# Protect project pages - require authentication
+# Redirects
 [[redirects]]
   from = "/projects/*"
   to = "/admin/"
   status = 200
   force = false
   conditions = {Role = ["anonymous"]}
+
+[[redirects]]
+  from = "/"
+  to = "/form-success/"
+  status = 200
+  conditions = {Form = "add-project"}
+
+[[redirects]]
+  from = "/*"
+  to = "/form-success/"
+  status = 200
+  conditions = {Form = "add-project"}
+
+# Netlify Identity (without any extra configuration that might cause issues)
+[identity]
