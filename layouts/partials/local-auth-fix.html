@@ -1,0 +1,71 @@
+﻿{{/* Local development authentication simulator */}}
+{{ if .Site.IsServer }}
+<script>
+    (function() {
+        // Only run in local development
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') return;
+        
+        console.log('🔐 Local auth simulator active');
+        
+        // Check if we're on a protected page
+        const isProtectedPage = window.location.pathname.startsWith('/projects/') || 
+                               window.location.pathname.startsWith('/test-auth/');
+        
+        // Check if user is logged in (simulated)
+        const isLoggedIn = localStorage.getItem('auth_simulator_logged_in') === 'true';
+        const userEmail = localStorage.getItem('auth_simulator_email') || 'user@example.com';
+        
+        // Redirect to login if on protected page and not logged in
+        if (isProtectedPage && !isLoggedIn) {
+            console.log('🔐 Not logged in, redirecting to login page');
+            // Store the page they were trying to access
+            sessionStorage.setItem('auth_redirect', window.location.pathname);
+            window.location.href = '/admin/';
+            return;
+        }
+        
+        // If we're on the admin page and just logged in
+        if (window.location.pathname === '/admin/' && isLoggedIn) {
+            const redirectTo = sessionStorage.getItem('auth_redirect') || '/test-auth/';
+            sessionStorage.removeItem('auth_redirect');
+            window.location.href = redirectTo;
+            return;
+        }
+        
+        // Setup Netlify Identity mock
+        window.netlifyIdentity = {
+            currentUser: function() { 
+                return isLoggedIn ? { email: userEmail } : null;
+            },
+            open: function(type) {
+                if (type === 'login' || type === 'signup') {
+                    const email = prompt('Enter email for local testing:', 'test@example.com');
+                    if (email) {
+                        localStorage.setItem('auth_simulator_logged_in', 'true');
+                        localStorage.setItem('auth_simulator_email', email);
+                        window.location.reload();
+                    }
+                }
+            },
+            logout: function() {
+                localStorage.removeItem('auth_simulator_logged_in');
+                localStorage.removeItem('auth_simulator_email');
+                window.location.href = '/';
+            },
+            on: function(event, callback) {
+                console.log('Auth event:', event);
+                if (event === 'init') {
+                    setTimeout(callback, 100);
+                }
+            },
+            init: function() { console.log('Auth initialized'); }
+        };
+        
+        // Dispatch init event
+        setTimeout(() => {
+            const event = new Event('netlifyIdentityReady');
+            document.dispatchEvent(event);
+        }, 100);
+    })();
+</script>
+{{ end }}

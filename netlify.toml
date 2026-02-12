@@ -37,3 +37,18 @@
   to = "/form-success/"
   status = 200
   conditions = {Form = "add-project"}
+
+# Netlify Identity Configuration
+[identity]
+  [identity.resources]
+    github = true
+    google = true
+    email = true
+
+# Protect project pages - require authentication
+[[redirects]]
+  from = "/projects/*"
+  to = "/admin/"
+  status = 200
+  force = false
+  conditions = {Role = ["anonymous"]}

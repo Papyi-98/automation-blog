@@ -1,0 +1,68 @@
+﻿{{/* Sign-out button that appears when user is logged in */}}
+<div id="user-menu" class="fixed top-4 right-4 z-50 hidden">
+    <div class="relative">
+        <button id="user-menu-button" class="flex items-center gap-2 bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <i class="fas fa-user-circle text-xl text-gray-600 dark:text-gray-400"></i>
+            <span id="user-email" class="text-sm font-medium text-gray-700 dark:text-gray-300">Loading...</span>
+            <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+        </button>
+        
+        <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 hidden">
+            <div class="py-1">
+                <a href="/projects/" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fas fa-project-diagram mr-2"></i>Projects
+                </a>
+                <hr class="my-1 border-gray-200 dark:border-gray-700">
+                <button id="logout-btn" class="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const netlifyIdentity = window.netlifyIdentity;
+        const userMenu = document.getElementById('user-menu');
+        const userEmail = document.getElementById('user-email');
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userDropdown = document.getElementById('user-dropdown');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        if (netlifyIdentity) {
+            // Check if user is logged in
+            netlifyIdentity.on('init', function(user) {
+                if (user) {
+                    // User is logged in - show the menu
+                    userMenu.classList.remove('hidden');
+                    userEmail.textContent = user.email;
+                }
+            });
+            
+            // Toggle dropdown when clicking the button
+            userMenuButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('hidden');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userMenuButton.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+            });
+            
+            // Handle logout
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                netlifyIdentity.logout();
+                netlifyIdentity.on('logout', function() {
+                    window.location.href = '/';
+                });
+            });
+            
+            netlifyIdentity.init();
+        }
+    });
+</script>
