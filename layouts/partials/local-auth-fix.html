@@ -1,5 +1,4 @@
 ﻿{{/* Local development authentication simulator */}}
-{{ if .Site.IsServer }}
 <script>
     (function() {
         // Only run in local development
@@ -18,7 +17,6 @@
         // Redirect to login if on protected page and not logged in
         if (isProtectedPage && !isLoggedIn) {
             console.log('🔐 Not logged in, redirecting to login page');
-            // Store the page they were trying to access
             sessionStorage.setItem('auth_redirect', window.location.pathname);
             window.location.href = '/admin/';
             return;
@@ -68,4 +66,3 @@
         }, 100);
     })();
 </script>
-{{ end }}
