@@ -5,12 +5,10 @@
 [build.environment]
   HUGO_VERSION = "0.155.1"
 
-# Redirects - with CORRECT conditions syntax
 [[redirects]]
   from = "/projects/*"
   to = "/admin/"
   status = 200
-  force = false
 
 [[redirects]]
   from = "/"
@@ -21,6 +19,3 @@
   from = "/*"
   to = "/form-success/"
   status = 200
-
-# Netlify Identity
-[identity]
