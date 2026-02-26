@@ -1,4 +1,4 @@
-[
+﻿[
     {
         "id":  "blog-deployment",
         "title":  "Blog Deployment Automation",
@@ -16,7 +16,7 @@
         "live":  "https://automation-blog.netlify.app",
         "date":  "2024-01-15",
         "featured":  true,
-        "icon":  "🚀",
+        "icon":  "ðŸš€",
         "readTime":  "5 min"
     },
     {
@@ -36,7 +36,7 @@
         "live":  "https://ci-cd-demo.netlify.app",
         "date":  "2024-01-10",
         "featured":  true,
-        "icon":  "⚙️",
+        "icon":  "âš™ï¸",
         "readTime":  "8 min"
     },
     {
@@ -56,7 +56,7 @@
         "live":  "",
         "date":  "2024-02-01",
         "featured":  true,
-        "icon":  "🕷️",
+        "icon":  "ðŸ•·ï¸",
         "readTime":  "10 min"
     },
     {
@@ -76,7 +76,7 @@
         "live":  "",
         "date":  "2024-01-20",
         "featured":  false,
-        "icon":  "📄",
+        "icon":  "ðŸ“„",
         "readTime":  "12 min"
     },
     {
@@ -96,7 +96,7 @@
         "live":  "",
         "date":  "2023-12-05",
         "featured":  false,
-        "icon":  "📧",
+        "icon":  "ðŸ“§",
         "readTime":  "7 min"
     },
     {
@@ -119,5 +119,245 @@
                      },
         "icon":  "??",
         "readTime":  "5 min"
+    },
+    {
+        "id":  "nextgen-portfolio-builder",
+        "title":  "NextGen Portfolio Builder",
+        "description":  "A modern portfolio generator with AI-powered content suggestions, theme customization, and one-click deployment to Netlify. Features real-time preview, responsive templates, and built-in SEO optimization.",
+        "category":  "web-development",
+        "status":  "completed",
+        "tech":  [
+                     "Next.js",
+                     "TypeScript",
+                     "TailwindCSS",
+                     "OpenAI API",
+                     "Netlify"
+                 ],
+        "github":  "https://github.com/Papyi-98/portfolio-builder",
+        "live":  "https://portfolio-builder.netlify.app",
+        "featured":  true,
+        "icon":  "🎨",
+        "readTime":  "8 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "e-commerce-analytics-dashboard",
+        "title":  "E-Commerce Analytics Dashboard",
+        "description":  "Real-time analytics dashboard for e-commerce stores with sales tracking, inventory management, customer behavior analysis, and predictive sales forecasting using machine learning.",
+        "category":  "web-development",
+        "status":  "completed",
+        "tech":  [
+                     "React",
+                     "D3.js",
+                     "Node.js",
+                     "MongoDB",
+                     "TensorFlow.js"
+                 ],
+        "github":  "https://github.com/Papyi-98/ecommerce-analytics",
+        "live":  "https://ecommerce-analytics-demo.netlify.app",
+        "featured":  true,
+        "icon":  "📊",
+        "readTime":  "10 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "real-time-collaboration-platform",
+        "title":  "Real-Time Collaboration Platform",
+        "description":  "A collaborative platform for remote teams with real-time document editing, video conferencing, task management, and integrated chat. Built with WebRTC and CRDTs for seamless collaboration.",
+        "category":  "web-development",
+        "status":  "completed",
+        "tech":  [
+                     "Vue.js",
+                     "WebRTC",
+                     "Node.js",
+                     "Redis",
+                     "PostgreSQL"
+                 ],
+        "github":  "https://github.com/Papyi-98/collab-platform",
+        "live":  "https://collab-demo.netlify.app",
+        "featured":  false,
+        "icon":  "🤝",
+        "readTime":  "12 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "kubernetes-gitops-pipeline",
+        "title":  "Kubernetes GitOps Pipeline",
+        "description":  "Complete GitOps workflow for Kubernetes using ArgoCD, with automated canary deployments, rollback capabilities, and integrated monitoring with Prometheus and Grafana.",
+        "category":  "devops",
+        "status":  "completed",
+        "tech":  [
+                     "Kubernetes",
+                     "ArgoCD",
+                     "Helm",
+                     "Prometheus",
+                     "Grafana"
+                 ],
+        "github":  "https://github.com/Papyi-98/gitops-pipeline",
+        "live":  "",
+        "featured":  true,
+        "icon":  "☸️",
+        "readTime":  "15 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "multi-cloud-infrastructure-as-code",
+        "title":  "Multi-Cloud Infrastructure as Code",
+        "description":  "Infrastructure as Code framework for managing AWS, Azure, and GCP resources using Terraform. Includes modular components, security scanning, and cost optimization features.",
+        "category":  "devops",
+        "status":  "completed",
+        "tech":  [
+                     "Terraform",
+                     "AWS",
+                     "Azure",
+                     "GCP",
+                     "Python"
+                 ],
+        "github":  "https://github.com/Papyi-98/multi-cloud-iac",
+        "live":  "",
+        "featured":  true,
+        "icon":  "☁️",
+        "readTime":  "10 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "cicd-security-scanner",
+        "title":  "CI/CD Security Scanner",
+        "description":  "Automated security scanning pipeline integrated with GitHub Actions that checks for vulnerabilities, secrets exposure, and compliance issues before deployment.",
+        "category":  "devops",
+        "status":  "completed",
+        "tech":  [
+                     "GitHub Actions",
+                     "Docker",
+                     "Trivy",
+                     "SonarQube",
+                     "Python"
+                 ],
+        "github":  "https://github.com/Papyi-98/security-scanner",
+        "live":  "",
+        "featured":  false,
+        "icon":  "🔒",
+        "readTime":  "8 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "real-time-data-pipeline",
+        "title":  "Real-Time Data Pipeline",
+        "description":  "Stream processing pipeline using Apache Kafka and Spark Streaming for real-time analytics. Handles millions of events per second with exactly-once processing semantics.",
+        "category":  "data-processing",
+        "status":  "completed",
+        "tech":  [
+                     "Apache Kafka",
+                     "Spark Streaming",
+                     "Cassandra",
+                     "Python",
+                     "Docker"
+                 ],
+        "github":  "https://github.com/Papyi-98/realtime-pipeline",
+        "live":  "",
+        "featured":  true,
+        "icon":  "⚡",
+        "readTime":  "12 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "etl-framework-for-data-warehousing",
+        "title":  "ETL Framework for Data Warehousing",
+        "description":  "Scalable ETL framework for data warehousing with support for multiple data sources, data validation, transformation rules, and integration with major cloud data warehouses.",
+        "category":  "data-processing",
+        "status":  "completed",
+        "tech":  [
+                     "Apache Airflow",
+                     "Python",
+                     "Snowflake",
+                     "dbt",
+                     "AWS Glue"
+                 ],
+        "github":  "https://github.com/Papyi-98/etl-framework",
+        "live":  "",
+        "featured":  true,
+        "icon":  "🔄",
+        "readTime":  "10 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "machine-learning-data-pipeline",
+        "title":  "Machine Learning Data Pipeline",
+        "description":  "End-to-end ML data pipeline for feature engineering, model training, and deployment. Includes data versioning, experiment tracking, and model monitoring.",
+        "category":  "data-processing",
+        "status":  "completed",
+        "tech":  [
+                     "Python",
+                     "MLflow",
+                     "Kubeflow",
+                     "TensorFlow",
+                     "Apache Beam"
+                 ],
+        "github":  "https://github.com/Papyi-98/ml-pipeline",
+        "live":  "",
+        "featured":  false,
+        "icon":  "🤖",
+        "readTime":  "12 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "smart-document-processing-system",
+        "title":  "Smart Document Processing System",
+        "description":  "AI-powered document processing system that extracts, classifies, and validates information from invoices, contracts, and forms using OCR and NLP.",
+        "category":  "workflow-automation",
+        "status":  "completed",
+        "tech":  [
+                     "Python",
+                     "OpenCV",
+                     "spaCy",
+                     "RabbitMQ",
+                     "PostgreSQL"
+                 ],
+        "github":  "https://github.com/Papyi-98/smart-document-processor",
+        "live":  "",
+        "featured":  true,
+        "icon":  "📄",
+        "readTime":  "10 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "automated-customer-support-platform",
+        "title":  "Automated Customer Support Platform",
+        "description":  "Intelligent ticket routing and response automation for customer support. Integrates with Zendesk, Slack, and email with AI-powered response suggestions.",
+        "category":  "workflow-automation",
+        "status":  "completed",
+        "tech":  [
+                     "Node.js",
+                     "OpenAI API",
+                     "Redis",
+                     "MongoDB",
+                     "React"
+                 ],
+        "github":  "https://github.com/Papyi-98/support-automation",
+        "live":  "",
+        "featured":  true,
+        "icon":  "💬",
+        "readTime":  "8 min",
+        "date":  "2026-02-26"
+    },
+    {
+        "id":  "devops-workflow-orchestrator",
+        "title":  "DevOps Workflow Orchestrator",
+        "description":  "Visual workflow orchestrator for DevOps tasks - automates deployments, database migrations, and infrastructure updates with approval gates and rollback capabilities.",
+        "category":  "workflow-automation",
+        "status":  "completed",
+        "tech":  [
+                     "Go",
+                     "Temporal",
+                     "Docker",
+                     "Kubernetes",
+                     "React"
+                 ],
+        "github":  "https://github.com/Papyi-98/workflow-orchestrator",
+        "live":  "",
+        "featured":  false,
+        "icon":  "🚀",
+        "readTime":  "10 min",
+        "date":  "2026-02-26"
     }
 ]
